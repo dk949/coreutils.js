@@ -1,0 +1,19 @@
+{
+  "name": "coreutilsjs",
+  "version": "0.1.0",
+  "description": "Reimplementing some standard unix commands in JS for cross platform use",
+  "main": "build/index.js",
+  "author": "dk949",
+  "license": "MIT",
+  "scripts": {
+    "build": "yarn tsc",
+    "rm": "yarn build && node build/rm.js"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.8",
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.2.0",
+    "typescript": "^4.5.2"
+  }
+}
