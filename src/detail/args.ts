@@ -38,7 +38,7 @@ export const parseArgs = (flags: Flags, rules: ArgRules, info: ArgsInfo): [strin
     [argv
         .slice(2)
         .filter(arg => {
-            if (!arg.startsWith('-')) return true;
+            if (!arg.startsWith('-') || arg.length === 1) return true;
             arg
                 .slice(1)
                 .split('')
@@ -54,7 +54,7 @@ export const parseArgs = (flags: Flags, rules: ArgRules, info: ArgsInfo): [strin
                                 }
                                 return false;
                             })
-                            .some(icomb) || die(1, `Unrecognised argumet ${flag}`);
+                            .some(icomb) || die(1, `Unrecognised argumet -${flag}`);
                     }
                     rules.forEach(rule => {
                         if (rule.exclusive.includes(flag)) {
