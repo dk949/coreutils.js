@@ -1,13 +1,22 @@
 import {stderr, stdin} from 'process';
+import {createInterface} from 'readline';
+
+
+
+const readln = {
+    tty: createInterface(stdin, stderr, undefined, false),
+    notty: createInterface(stdin, stderr, undefined, true),
+} as const;
 
 export function internalError(s: string): never {
     stderr.write(`INTERNAL ERROR: ${s}\n`);
+    closeReadln();
     process.exit(-1);
 }
 
-
 export function die(code: number, msg: string): never {
     stderr.write(`${msg}\n`);
+    closeReadln();
     process.exit(code);
 }
 
@@ -16,17 +25,28 @@ export function diagnostic(msg: string) {
 }
 
 export async function boolPrompt(msg: string, def: boolean = false): Promise<boolean> {
-    stderr.write(`${msg} ${def ? "(Y/n)" : "(y/N)"}\n`);
-    return (await readStdin())
-        .slice(0, 1)
-        .toLowerCase() === (def ? 'n' : 'y');
+    return new Promise((res, rej) => {
+        try {
+            readln.tty.question(`${msg} ${def ? "(Y/n)" : "(y/N)"}\n`, (input: string) => {
+                res(input
+                    .slice(0, 1)
+                    .toLowerCase() === (def ? 'n' : 'y'));
+            });
+        } catch (e) {
+            rej(e);
+        }
+    });
 }
 
-async function readStdin(): Promise<string> {
-    for await (const chunk of stdin) {
-        return (chunk as Buffer)
-            .toString()
-            .trim();
+
+export async function readNoTTY(): Promise<string> {
+    let chunks: Buffer[] = [];
+    for await (const chunk of stdin){
+        chunks.push(chunk);
     }
-    internalError("failed reading stdin");
+    return chunks.map(chunk => chunk.toString()).join('');
+}
+
+export async function closeReadln() {
+    Object.values(readln).forEach(r => r.close());
 }

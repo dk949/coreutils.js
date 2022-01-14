@@ -3,7 +3,7 @@ rm implementation in accordance with IEEE Std 1003.1-2017
 (https://pubs.opengroup.org/onlinepubs/9699919799/utilities/rm.html)
 */
 import {Flags, parseArgs} from "./detail/args";
-import {diagnostic, /*die,*/ boolPrompt} from "./detail/io";
+import {diagnostic, /*die,*/ boolPrompt, closeReadln} from "./detail/io";
 import fs from "fs";
 import path from "path";
 
@@ -13,9 +13,8 @@ async function rm(flags: Flags, file: string): Promise<void> {
     // rm shall write a diagnostic message to standard error and do nothing more with such operands.
     switch (file) {case ".": case "..": case "/": return diagnostic(`cannot remove ${file}`);}
 
-    const stat = fs.lstatSync(file);
     // 1. If the file does not exist:
-    if (!fs.existsSync(file) && !stat.isSymbolicLink()) {
+    if (!fs.existsSync(file) /*&& !stat.isSymbolicLink()*/) {
         //If the -f option is not specified, rm shall write a diagnostic message to standard error.
         if (!flags['f']) {
             diagnostic(`file '${file}' does not exist. skipping it`);
@@ -24,6 +23,7 @@ async function rm(flags: Flags, file: string): Promise<void> {
         return;
     }
 
+    const stat = fs.lstatSync(file);
 
     // 2. If file is of type directory, the following steps shall be taken:
     if (stat.isDirectory()) {
@@ -85,7 +85,6 @@ async function rm(flags: Flags, file: string): Promise<void> {
 
 
 async function main() {
-
     const [args, flags] = parseArgs(
         {
             "f": false,
@@ -107,6 +106,7 @@ async function main() {
     for (const file of args) {
         await rm(flags, file);
     }
+    closeReadln();
 }
 
 main();
