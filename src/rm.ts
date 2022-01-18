@@ -3,7 +3,7 @@ rm implementation in accordance with IEEE Std 1003.1-2017
 (https://pubs.opengroup.org/onlinepubs/9699919799/utilities/rm.html)
 */
 import {Flags, parseArgs} from "./detail/args";
-import {diagnostic, /*die,*/ boolPrompt, closeReadln} from "./detail/io";
+import {diagnostic, /*die,*/ boolPrompt, closeReadln, openReadln} from "./detail/io";
 import fs from "fs";
 import path from "path";
 
@@ -102,6 +102,8 @@ async function main() {
             "version": "0.1.0",
         }
     );
+
+    openReadln();
 
     for (const file of args) {
         await rm(flags, file);

@@ -5,7 +5,7 @@ cat implementation in accordance with IEEE Std 1003.1-2017
 import {readFileSync} from "fs";
 import {stdin, stdout} from "process";
 import {parseArgs} from "./detail/args";
-import {closeReadln, readNoTTY} from "./detail/io";
+import {closeReadln, openReadln, readNoTTY} from "./detail/io";
 
 async function main() {
 
@@ -16,7 +16,7 @@ async function main() {
         [],
         {
             "name": "cat",
-            "usage": ["cat [-u] [file...]"],
+            "usage": ["[-u] [file...]"],
             "description": "concatenate and print files",
             "version": "0.1.0",
         }
@@ -27,6 +27,7 @@ async function main() {
     }
 
 
+    openReadln();
     for await (const file of args) {
         //If a file is '-', the cat utility shall read from the standard input at that point in the sequence.
         if (file === '-') {

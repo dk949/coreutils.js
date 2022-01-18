@@ -1,12 +1,15 @@
-import {stderr, stdin} from 'process';
-import {createInterface} from 'readline';
+import {stdout, stderr, stdin} from 'process';
+import {createInterface, Interface} from 'readline';
 
 
+let readln: {tty: Interface, notty: Interface};
+export function openReadln() {
+    readln = {
+        tty: createInterface(stdin, stderr, undefined, false),
+        notty: createInterface(stdin, stderr, undefined, true),
+    };
 
-const readln = {
-    tty: createInterface(stdin, stderr, undefined, false),
-    notty: createInterface(stdin, stderr, undefined, true),
-} as const;
+}
 
 export function internalError(s: string): never {
     stderr.write(`INTERNAL ERROR: ${s}\n`);
@@ -22,6 +25,10 @@ export function die(code: number, msg: string): never {
 
 export function diagnostic(msg: string) {
     stderr.write(`${msg}\n`);
+}
+
+export function message(msg: string) {
+    stdout.write(`${msg}\n`);
 }
 
 export async function boolPrompt(msg: string, def: boolean = false): Promise<boolean> {
@@ -41,7 +48,7 @@ export async function boolPrompt(msg: string, def: boolean = false): Promise<boo
 
 export async function readNoTTY(): Promise<string> {
     let chunks: Buffer[] = [];
-    for await (const chunk of stdin){
+    for await (const chunk of stdin) {
         chunks.push(chunk);
     }
     return chunks.map(chunk => chunk.toString()).join('');
