@@ -7,7 +7,12 @@
   "license": "MIT",
   "scripts": {
     "build": "yarn tsc",
-    "rm": "yarn build && node build/rm.js"
+    "cat": "yarn build && node build/cat.js",
+    "echo": "yarn build && node build/echo.js",
+    "false": "yarn build && node build/false.js",
+    "index": "yarn build && node build/index.js",
+    "rm": "yarn build && node build/rm.js",
+    "true": "yarn build && node buildtrue.js/"
   },
   "devDependencies": {
     "@types/node": "^17.0.5",
