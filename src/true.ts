@@ -1,7 +1,14 @@
 /*
-true implementation in accordance with IEEE Std 1003.1-2017
+  MIT License
+
+  Copyright (c) 2022, dk949.
+*/
+
+/*
+true implementation according to IEEE Std 1003.1-2017
 (https://pubs.opengroup.org/onlinepubs/9699919799/utilities/true.html)
 */
+
 import {exit} from "process";
 import {parseArgs} from "./detail/args";
 
