@@ -27,8 +27,8 @@ A program can be either:
 | :ballot_box_with_check: | cat        | Filesystem            | Mandatory      | Concatenate and print files                                                |
 | :ballot_box_with_check: | rm         | Filesystem            | Mandatory      | Remove directory entries                                                   |
 | :ballot_box_with_check: | echo       | Shell programming     | Mandatory      | Write arguments to standard output                                         |
-| :hammer:                | true       | Shell programming     | Mandatory      | Return true value                                                          |
-| :hammer:                | false      | Shell programming     | Mandatory      | Return false value                                                         |
+| :ballot_box_with_check: | false      | Shell programming     | Mandatory      | Return false value                                                         |
+| :ballot_box_with_check: | true       | Shell programming     | Mandatory      | Return true value                                                          |
 | :hammer:                | mkdir      | Filesystem            | Mandatory      | Make directories                                                           |
 | :hammer:                | mv         | Filesystem            | Mandatory      | Move or rename files                                                       |
 | :calendar:              | comm       | Text processing       | Mandatory      | Select or reject lines common to two files                                 |
