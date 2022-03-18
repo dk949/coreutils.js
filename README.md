@@ -5,21 +5,16 @@ command line utilities](https://en.wikipedia.org/wiki/List_of_Unix_commands).
 
 ## Requirements
 
-* Node
-  * Specific version TBA
-* Yarn
-  * Install with `npm i yarn -g`
+* [node](https://nodejs.org/en/)
+* [yarn](https://yarnpkg.com/)
 
 ## Plan
 
 A program can be either:
 
 * :ballot_box_with_check: - implemented
-
 * :hammer: - currently worked on
-
 * :calendar: - Will be done in the future
-
 * :no_entry: - Will not be done in the future
 
 | Implementation status   | Program    | Category              | Option code    | Description                                                                |
